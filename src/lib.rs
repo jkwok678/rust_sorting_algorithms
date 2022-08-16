@@ -40,9 +40,22 @@ pub fn selection_sort(array: &mut Vec<i16>) {
     for i in 0..array.len() {
         let mut min_index = i;
         for j in i..array.len() {
-            if array[i] < array[min_index] {
-                min_index = i
+            if array[j] < array[min_index] {
+                min_index = j;
             }
+        }
+        array.swap(i, min_index);
+    }
+}
+
+pub fn insertion_sort(array: &mut Vec<i16>) {
+    for i in 0..array.len() {
+        let key = array[i];
+        let mut j = i;
+        while (j >= 0) & (key < array[j]) {
+            array[j + 1] = array[j];
+            j -= 1;
+            array[j + 1] = key;
         }
     }
 }
@@ -53,9 +66,25 @@ pub fn check_in_order(array: &Vec<i16>) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use crate::{bubble_sort_v1, check_in_order, selection_sort};
+
     #[test]
     fn it_works() {
         let result = 2 + 2;
         assert_eq!(result, 4);
+    }
+
+    #[test]
+    fn bubble_sort_1_works() {
+        let mut array: Vec<i16> = vec![20, 15, 2, 1, 4, 9, 11, 14, 17, 16];
+        bubble_sort_v1(&mut array);
+        assert_eq!(check_in_order(&array), true);
+    }
+
+    #[test]
+    fn selection_sort_works() {
+        let mut array: Vec<i16> = vec![20, 15, 2, 1, 4, 9, 11, 14, 17, 16];
+        selection_sort(&mut array);
+        assert_eq!(check_in_order(&array), true);
     }
 }
