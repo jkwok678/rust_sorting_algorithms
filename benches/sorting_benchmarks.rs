@@ -1,7 +1,7 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use rand::Rng;
 use sorting_algorithms::{
-    bubble_sort_v1, bubble_sort_v2, bubble_sort_v3, insertion_sort, selection_sort,
+    bubble_sort_v1, bubble_sort_v2, bubble_sort_v3, insertion_sort, merge_sort, selection_sort,
 };
 fn sorting_benchmarks(c: &mut Criterion) {
     let mut rng = rand::thread_rng();
@@ -38,6 +38,13 @@ fn sorting_benchmarks(c: &mut Criterion) {
         b.iter(|| {
             let mut array: Vec<i16> = (0..100).map(|_| rng.gen()).collect();
             insertion_sort(black_box(&mut array));
+        })
+    });
+
+    c.bench_function("merge_sort v1", |b| {
+        b.iter(|| {
+            let mut array: Vec<i16> = (0..100).map(|_| rng.gen()).collect();
+            merge_sort(black_box(&mut array));
         })
     });
 }
